@@ -4,6 +4,12 @@ import './App.css'
 function App() {
   const [books, setBooks] = useState([])
 
+  useEffect(() => {
+    fetch('/api/books')
+    .then((r) => r.json())
+    .then((data) => console.log(data))
+  }, [])
+
   return (
     <>
       <div>
