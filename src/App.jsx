@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import './App.css'
 
 function App() {
   const [books, setBooks] = useState([])
@@ -7,7 +6,7 @@ function App() {
   useEffect(() => {
     fetch('/api/books')
     .then((r) => r.json())
-    .then((data) => console.log(data))
+    .then((data) => setBooks(data))
   }, [])
 
   return (
@@ -18,6 +17,11 @@ function App() {
         <p>
           This will display some books
         </p>
+        <ul>
+          {books.map((book) => (
+            <li key={book.id}>{book.title} by {book.author}</li>
+          ))}
+        </ul>
       </div>
     </>
   )
