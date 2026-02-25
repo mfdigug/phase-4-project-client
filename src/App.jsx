@@ -1,30 +1,24 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
+import NavBar from "./NavBar";
+import Hero from "./Hero";
+import BookList from "./BookList";
 
 function App() {
-  const [books, setBooks] = useState([])
+  const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    fetch('/api/books')
-    .then((r) => r.json())
-    .then((data) => setBooks(data))
-  }, [])
+    fetch("/api/books")
+      .then((r) => r.json())
+      .then((data) => setBooks(data));
+  }, []);
 
   return (
-    <>
-      <div>
-        <h1>Book Exchange App</h1>
-      
-        <p>
-          This will display some books
-        </p>
-        <ul>
-          {books.map((book) => (
-            <li key={book.id}>{book.title} by {book.author}</li>
-          ))}
-        </ul>
-      </div>
-    </>
-  )
+    <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
+      <NavBar />
+      <Hero />
+      <BookList books={books} />
+    </div>
+  );
 }
 
-export default App
+export default App;
