@@ -37,7 +37,7 @@ const BookCard = ({ book }) => {
 
         <div className="flex items-center gap-2 text-sm text-slate-600 mb-4">
           {/* <User className="w-4 h-4" /> */}
-          <span>User: {book.owner.username}</span>
+          <span>User: {book.owner?.username}</span>
         </div>
 
         {/* {showRequestButton && ( */}

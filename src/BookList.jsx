@@ -4,6 +4,8 @@ import BookCard from "./BookCard";
 const BookList = ({ books }) => {
   //set if is_avail condition
 
+  const availableBooks = books.filter((book => book.is_available === true))
+
   return (
    <div>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,7 +19,7 @@ const BookList = ({ books }) => {
       </div>
     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {books.map((book) => (
+        {availableBooks.map((book) => (
           <BookCard key={book.id} book={book} />
         ))}
       </div>
