@@ -17,8 +17,8 @@ function App() {
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
       <NavBar />
       <Routes>
-        <Route exact path="/" element={<BookList books={books} />} />
-        <Route exact path="/userprofile" element={<UserProfile />} />
+        <Route path="/" element={<BookList books={books} />} />
+        <Route path="/userprofile/*" element={<UserProfile />} />
       </Routes>
     </div>
   );
