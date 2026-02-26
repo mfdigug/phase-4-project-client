@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import NavBar from "./NavBar";
-import Hero from "./Hero";
 import BookList from "./BookList";
+import UserProfile from "./UserProfile";
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -15,8 +16,10 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
       <NavBar />
-      <Hero />
-      <BookList books={books} />
+      <Routes>
+        <Route exact path="/" element={<BookList books={books} />} />
+        <Route exact path="/userprofile" element={<UserProfile />} />
+      </Routes>
     </div>
   );
 }

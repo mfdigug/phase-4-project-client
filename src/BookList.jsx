@@ -1,17 +1,17 @@
 import React from "react";
+import BookCard from "./BookCard";
 
 const BookList = ({ books }) => {
+  //set if is_avail condition
+
   return (
     <div>
       <h2>Book List</h2>
-      <ul>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {books.map((book) => (
-          <li key={book.id} className="bg-slate-800 p-4 rounded">
-            <h3 className="text-xl font-semibold">{book.title}</h3>
-            <p className="text-sm text-gray-400">by {book.author}</p>
-          </li>
+          <BookCard key={book.id} book={book} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
