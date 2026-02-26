@@ -3,47 +3,77 @@ import { NavLink, useLocation } from "react-router-dom";
 
 export default function NavBar() {
   const location = useLocation();
-  const isBooklist = location.pathname === "/";
+  const isProfile = location.pathname.startsWith("/userprofile");
 
   return (
-    <nav>
-      {isBooklist ? (
-        <div>
-          <h1 className="text-xl font-bold">Book Exchange</h1>
-          <NavLink
-            to="/userprofile"
-            className="mr-4 text-gray-300 hover:text-white"
-          >
-            My Profile
-          </NavLink>
-        </div>
-      ) : (
-        <div>
-          <h1 className="text-xl font-bold">My Profile</h1>
+    <div> 
+     <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-[120px]">
 
-          <NavLink to="/" className="mr-4 text-gray-300 hover:text-white">
-            Available Books
-          </NavLink>
-          <NavLink
-            to="/userprofile/mybooks"
-            className="mr-4 text-gray-300 hover:text-white"
-          >
-            My Books
-          </NavLink>
-          <NavLink
-            to="/userprofile/requestedbooks"
-            className="mr-4 text-gray-300 hover:text-white"
-          >
-            Requested Books
-          </NavLink>
-          <NavLink
-            to="/userprofile/pendingrequests"
-            className="mr-4 text-gray-300 hover:text-white"
-          >
-            Pending Requests
-          </NavLink>
+            <div className="flex items-center gap-2">
+              <h1 className="text-3xl font-semibold text-slate-900">BookSwap</h1>
+            </div>
+    
+            <nav className="flex flex-col items-end justify-center h-full">
+              <div className="flex gap-4">
+
+                <NavLink to="/" className={({ isActive}) => `px-4 py-2 rounded-lg ${
+                      isActive
+                        ? "bg-slate-900 text-white"
+                        : "text-slate-600 hover:bg-slate-100"
+                    }`
+                  }
+                >
+                  Available Books
+                </NavLink>
+
+                                  
+                <NavLink
+                  to="/userprofile"
+                  className={({ isActive }) =>
+                    `px-4 py-2 rounded-lg ${
+                      isActive
+                        ? "bg-slate-900 text-white"
+                        : "text-slate-600 hover:bg-slate-100"
+                    }`
+                  }
+                >
+                  My Profile
+                </NavLink>
+            </div>
+
+            <div className="flex gap-2 mt-2 min-h-[40px]">
+            {isProfile && (
+              <div className="flex gap-2 border-b border-slate-200">
+
+                <NavLink
+                  to="/userprofile/mybooks"
+                  className="flex items-center gap-2 px-4 py-3 border-b-2 transition-colors border-transparent text-slate-600 hover:text-slate-900"
+                >
+                  My Books
+                </NavLink>
+                <NavLink
+                  to="/userprofile/requestedbooks"
+                  className="flex items-center gap-2 px-4 py-3 border-b-2 transition-colors border-transparent text-slate-600 hover:text-slate-900"
+                >
+                  Requested Books
+                </NavLink>
+                <NavLink
+                  to="/userprofile/pendingrequests"
+                  className="flex items-center gap-2 px-4 py-3 border-b-2 transition-colors border-transparent text-slate-600 hover:text-slate-900"
+                >
+                  Pending Requests
+                </NavLink>
+
+              </div>
+            )}
+            </div>
+
+            </nav>
+           </div>
         </div>
-      )}
-    </nav>
+      </header>
+    </div>
   );
 }
