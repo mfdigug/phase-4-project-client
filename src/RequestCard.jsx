@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react'
 
-const BookCard = ({ book, status }) => {
+const RequestCard = () => {
   const conditionColors = {
     New: "bg-green-100 text-green-800",
     "Like New": "bg-blue-100 text-blue-800",
@@ -8,23 +8,13 @@ const BookCard = ({ book, status }) => {
     Fair: "bg-orange-100 text-orange-800"
   };
 
-    const statusColors = {
-    approved: "bg-green-200 text-green-900",
-    rejected: "bg-red-200 text-red-900",
-    pending: "bg-yellow-200 text-yellow-900"
-  };
-
   return (
     <div className="bg-[#8db0b0] rounded-lg border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow">
       <div className="aspect-[3/4] overflow-hidden bg-slate-100">
         <img
-          src={book.image || "https://plus.unsplash.com/premium_photo-1772065873807-06f1313b665f?q=80&w=736&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
+          src={book.coverImage}
           alt={book.title}
           className="w-full h-full object-cover"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = "https://plus.unsplash.com/premium_photo-1772065873807-06f1313b665f?q=80&w=736&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }}
         />
       </div>
       <div className="p-4">
@@ -43,19 +33,14 @@ const BookCard = ({ book, status }) => {
           >
             {book.condition}
           </span>
-
-          {status && (
-            <span className={`px-2 py-1 text-xs rounded ${statusColors[status]}`}>
-              {status}
-            </span>
-          )}
-
-
         </div>
 
         {/* {showRequestButton && ( */}
-        <button className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-          Request Exchange
+        <button className="w-1/2 py-2 bg-green-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+          Accept 
+        </button>
+        <button className="w-1/2 py-2 bg-red-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+          Reject
         </button>
         {/* )} */}
       </div>
@@ -63,4 +48,5 @@ const BookCard = ({ book, status }) => {
   );
 };
 
-export default BookCard;
+
+export default RequestCard
