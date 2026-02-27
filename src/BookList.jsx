@@ -3,7 +3,7 @@ import { UserContext } from "./App"
 import BookCard from "./BookCard";
 
 
-const BookList = ({ books, user }) => {
+const BookList = ({ books }) => {
 
   const currentUser = useContext(UserContext)
   const availableBooks = books.filter((book => book.is_available === true && book.owner.id !== currentUser.id))

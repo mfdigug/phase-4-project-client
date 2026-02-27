@@ -17,7 +17,7 @@ function App() {
   }, []);
   
   useEffect(() => {
-    fetch("/api/users/4")
+    fetch("/api/users/8")
       .then((r) => r.json())
       .then((data) => setCurrentUser(data));
   }, []);
