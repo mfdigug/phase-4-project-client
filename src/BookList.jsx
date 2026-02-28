@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { UserContext } from "./App";
 import BookCard from "./BookCard";
 
-const BookList = ({ books, handleRequest }) => {
+const BookList = ({ books, handleRequest, showRequestToast }) => {
   const currentUser = useContext(UserContext);
 
   const requestedBookIds = currentUser.book_requests
@@ -19,6 +19,11 @@ const BookList = ({ books, handleRequest }) => {
   return (
     <div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 mt-8">
+        {showRequestToast && (
+          <div className="mb-4 left-6 z-50 bg-green-600 text-white text-xl px-6 py-3 rounded-lg shadow-lg">
+            Request sent
+          </div>
+        )}
         <div className="flex justify-between items-center h-[120px]">
           <div className="flex items-center gap-2">
             <div className="flex flex-col items-start justify-center h-full">

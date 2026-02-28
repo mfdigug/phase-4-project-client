@@ -23,6 +23,16 @@ function App() {
       .then((data) => setCurrentUser(data));
   }, []);
 
+  useEffect(() => {
+    if (!showRequestToast) return;
+
+    const timer = setTimeout(() => {
+      setShowRequestToast(false);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, [showRequestToast]);
+
   const handleRequest = async (bookId) => {
     if (!currentUser?.id) return;
 
@@ -53,9 +63,6 @@ function App() {
       }));
 
       setShowRequestToast(true);
-      setTimeout(() => {
-        setShowRequestToast(false);
-      }, 2500);
     } catch (err) {
       console.error("Failed to create request:", err);
     }
@@ -65,15 +72,16 @@ function App() {
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
       <NavBar />
       <UserContext.Provider value={currentUser}>
-        {showRequestToast && (
-          <div className="fixed top-6 right-6 z-50 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg">
-            Request sent
-          </div>
-        )}
         <Routes>
           <Route
             path="/"
-            element={<BookList books={books} handleRequest={handleRequest} />}
+            element={
+              <BookList
+                books={books}
+                handleRequest={handleRequest}
+                showRequestToast={showRequestToast}
+              />
+            }
           />
           <Route path="/userprofile/*" element={<UserProfile />} />
         </Routes>
