@@ -9,6 +9,7 @@ export const UserContext = createContext();
 function App() {
   const [books, setBooks] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
+  const [showRequestToast, setShowRequestToast] = useState(false);
 
   useEffect(() => {
     fetch("/api/books")
@@ -43,7 +44,18 @@ function App() {
       }
       const newRequest = await response.json();
       console.log("Request created:", newRequest);
-      //update UI
+
+      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
+
+      setCurrentUser((prevUser) => ({
+        ...prevUser,
+        book_requests: [...(prevUser.book_requests || []), newRequest],
+      }));
+
+      setShowRequestToast(true);
+      setTimeout(() => {
+        setShowRequestToast(false);
+      }, 2500);
     } catch (err) {
       console.error("Failed to create request:", err);
     }
@@ -53,6 +65,11 @@ function App() {
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
       <NavBar />
       <UserContext.Provider value={currentUser}>
+        {showRequestToast && (
+          <div className="fixed top-6 right-6 z-50 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg">
+            Request sent
+          </div>
+        )}
         <Routes>
           <Route
             path="/"
