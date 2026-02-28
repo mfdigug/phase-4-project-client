@@ -2,7 +2,7 @@ import { useState, useEffect, createContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import BookList from "./BookList";
-import UserProfile from "./UserProfile";
+import UserProfile from "./UserComponents/UserProfile";
 
 export const UserContext = createContext();
 
@@ -10,6 +10,7 @@ function App() {
   const [books, setBooks] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [showRequestToast, setShowRequestToast] = useState(false);
+  const [showRequestDeletedToast, setShowRequestDeletedToast] = useState(false);
 
   useEffect(() => {
     fetch("/api/books")
@@ -33,6 +34,16 @@ function App() {
     return () => clearTimeout(timer);
   }, [showRequestToast]);
 
+  useEffect(() => {
+    if (!showRequestDeletedToast) return;
+
+    const timer = setTimeout(() => {
+      setShowRequestDeletedToast(false);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, [showRequestDeletedToast]);
+
   const handleRequest = async (bookId) => {
     if (!currentUser?.id) return;
 
@@ -53,10 +64,8 @@ function App() {
         throw new Error("Error creating request");
       }
       const newRequest = await response.json();
-      console.log("Request created:", newRequest);
-
+      // update UI
       setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
-
       setCurrentUser((prevUser) => ({
         ...prevUser,
         book_requests: [...(prevUser.book_requests || []), newRequest],
@@ -77,15 +86,15 @@ function App() {
       if (!response.ok) {
         throw new Error("Error deleting request");
       }
-
-      console.log(requestId, "deleted successfully");
-
+      //Update UI
       setCurrentUser((prevUser) => ({
         ...prevUser,
         book_requests: prevUser.book_requests.filter(
           (request) => request.id !== requestId,
         ),
       }));
+
+      setShowRequestDeletedToast(true);
     } catch (err) {
       console.error("Failed to delete request:", err);
     }
@@ -108,7 +117,12 @@ function App() {
           />
           <Route
             path="/userprofile/*"
-            element={<UserProfile onDeleteRequest={handleDeleteRequest} />}
+            element={
+              <UserProfile
+                onDeleteRequest={handleDeleteRequest}
+                showRequestDeletedToast={showRequestDeletedToast}
+              />
+            }
           />
         </Routes>
       </UserContext.Provider>

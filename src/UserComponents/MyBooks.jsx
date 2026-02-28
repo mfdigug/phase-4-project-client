@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { UserContext } from "./App";
-import BookCard from "./BookCard";
+import { UserContext } from "../App";
+import BookCard from "../BookCard";
 
 const MyBooks = () => {
   const currentUser = useContext(UserContext);

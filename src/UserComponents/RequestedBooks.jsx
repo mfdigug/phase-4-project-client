@@ -1,12 +1,18 @@
 import { useState, useContext } from "react";
-import { UserContext } from "./App";
-import BookCard from "./BookCard";
+import { UserContext } from "../App";
+import BookCard from "../BookCard";
 
-const RequestedBooks = ({ onDeleteRequest }) => {
+const RequestedBooks = ({ onDeleteRequest, showRequestDeletedToast }) => {
   const currentUser = useContext(UserContext);
 
   return (
     <div>
+      {showRequestDeletedToast && (
+        <div className="mb-4 left-6 z-50 bg-red-600 text-white text-xl px-6 py-3 rounded-lg shadow-lg">
+          Request deleted
+        </div>
+      )}
+
       <h2 className="text-3xl font-semibold text-slate-500 mb-6">
         Requested Books
       </h2>

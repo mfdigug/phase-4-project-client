@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { UserContext } from "./App";
+import { UserContext } from "../App";
 import { Routes, Route } from "react-router-dom";
 import MyBooks from "./MyBooks";
 import RequestedBooks from "./RequestedBooks";
 import PendingRequests from "./PendingRequests";
 
-const UserProfile = ({ onDeleteRequest }) => {
+const UserProfile = ({ onDeleteRequest, showRequestDeletedToast }) => {
   const currentUser = useContext(UserContext);
 
   return (
@@ -39,7 +39,12 @@ const UserProfile = ({ onDeleteRequest }) => {
           <Route path="mybooks" element={<MyBooks />} />
           <Route
             path="requestedbooks"
-            element={<RequestedBooks onDeleteRequest={onDeleteRequest} />}
+            element={
+              <RequestedBooks
+                onDeleteRequest={onDeleteRequest}
+                showRequestDeletedToast={showRequestDeletedToast}
+              />
+            }
           />
           <Route path="pendingrequests" element={<PendingRequests />} />
         </Routes>

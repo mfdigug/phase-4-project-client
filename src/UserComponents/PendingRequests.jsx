@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from "react";
-import { UserContext } from "./App";
+import { UserContext } from "../App";
 import RequestCard from "./RequestCard";
 
 const PendingRequests = () => {
