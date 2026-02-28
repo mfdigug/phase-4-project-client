@@ -68,6 +68,29 @@ function App() {
     }
   };
 
+  const handleDeleteRequest = async (requestId) => {
+    try {
+      const response = await fetch(`/api/book_requests/${requestId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Error deleting request");
+      }
+
+      console.log(requestId, "deleted successfully");
+
+      setCurrentUser((prevUser) => ({
+        ...prevUser,
+        book_requests: prevUser.book_requests.filter(
+          (request) => request.id !== requestId,
+        ),
+      }));
+    } catch (err) {
+      console.error("Failed to delete request:", err);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
       <NavBar />
@@ -83,7 +106,10 @@ function App() {
               />
             }
           />
-          <Route path="/userprofile/*" element={<UserProfile />} />
+          <Route
+            path="/userprofile/*"
+            element={<UserProfile onDeleteRequest={handleDeleteRequest} />}
+          />
         </Routes>
       </UserContext.Provider>
     </div>

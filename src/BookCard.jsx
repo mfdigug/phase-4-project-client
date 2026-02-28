@@ -1,12 +1,18 @@
 import RequestExchangeButton from "./BookCardButtons/RequestExchangeButton";
+import DeleteRequestButton from "./BookCardButtons/DeleteRequestButton";
+import DeleteBookButton from "./BookCardButtons/DeleteBookButton";
 
 const BookCard = ({
   book,
   status,
+  request,
   showDeleteRequest,
   showDeleteTitle,
   onRequest,
+  onDeleteRequest,
+  onDeleteBook,
 }) => {
+  //styling
   const conditionColors = {
     New: "bg-green-100 text-green-800",
     "Like New": "bg-blue-100 text-blue-800",
@@ -61,22 +67,16 @@ const BookCard = ({
           )}
         </div>
 
+        {/* buttons logic & components */}
+
         {showDeleteRequest && (
-          <button
-            className="w-full py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-            onClick={() => handleDeleteRequest(request.id)}
-          >
-            Delete Request
-          </button>
+          <DeleteRequestButton onClick={() => onDeleteRequest(request.id)} />
         )}
+
         {showDeleteTitle && (
-          <button
-            className="w-full py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-            onClick={() => handleDeleteBook(book.id)}
-          >
-            Delete Book
-          </button>
+          <DeleteBookButton onClick={() => onDeleteBook(book.id)} />
         )}
+
         {!showDeleteRequest && !showDeleteTitle && (
           <RequestExchangeButton onClick={() => onRequest(book.id)} />
         )}

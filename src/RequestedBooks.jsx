@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { UserContext } from "./App";
 import BookCard from "./BookCard";
 
-const RequestedBooks = () => {
+const RequestedBooks = ({ onDeleteRequest }) => {
   const currentUser = useContext(UserContext);
 
   return (
@@ -16,9 +16,11 @@ const RequestedBooks = () => {
           currentUser?.book_requests?.map((request) => (
             <BookCard
               key={request.id}
+              request={request}
               book={request.book_copy}
               status={request.status}
               showDeleteRequest={true}
+              onDeleteRequest={onDeleteRequest}
             />
           ))
         ) : (

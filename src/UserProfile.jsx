@@ -5,7 +5,7 @@ import MyBooks from "./MyBooks";
 import RequestedBooks from "./RequestedBooks";
 import PendingRequests from "./PendingRequests";
 
-const UserProfile = () => {
+const UserProfile = ({ onDeleteRequest }) => {
   const currentUser = useContext(UserContext);
 
   return (
@@ -37,7 +37,10 @@ const UserProfile = () => {
 
         <Routes>
           <Route path="mybooks" element={<MyBooks />} />
-          <Route path="requestedbooks" element={<RequestedBooks />} />
+          <Route
+            path="requestedbooks"
+            element={<RequestedBooks onDeleteRequest={onDeleteRequest} />}
+          />
           <Route path="pendingrequests" element={<PendingRequests />} />
         </Routes>
       </div>

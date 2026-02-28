@@ -1,9 +1,9 @@
-const DeleteRequestButton = ({ onClick }) => (
+const DeleteBookButton = ({ onClick }) => (
   <button
     className="w-full py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
     onClick={onClick}
   >
-    Delete Request
+    Delete Book
   </button>
 );
-export default DeleteRequestButton;
+export default DeleteBookButton;
