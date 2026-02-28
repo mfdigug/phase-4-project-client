@@ -1,17 +1,16 @@
 import React from "react";
 
 const RequestCard = ({ requestObj }) => {
-  //  const formatDate = (dateString: string) => {
-  //   const date = new Date(dateString);
-  //   return date.toLocaleDateString("en-AU", {
-  //     day: "numeric",
-  //     month: "short",
-  //     year: "numeric"
-  //   })
-  //  }
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-AU", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
 
   return (
-    <div className="bg-[#8db0b0] rounded-lg border border-slate-200 p-4 hover:shadow-md transition-shadow">
+    <div className="bg-[#8db0b0] rounded-lg border border-slate-200 mb-4 p-4 hover:shadow-md transition-shadow">
       <div className="flex gap-4 mb-2">
         <div className="w-20 h-28 flex-shrink-0 rounded overflow-hidden bg-slate-100">
           <img
@@ -37,7 +36,11 @@ const RequestCard = ({ requestObj }) => {
         <div className="flex items-center gap-2 text-slate-600 mb-3">
           <p>
             Requested by:{" "}
-            <span className="font-medium">{requestObj.requester.username}</span>
+            <span className="font-medium">{requestObj.requester.username}</span>{" "}
+            on:{" "}
+            <span className="font-medium">
+              {formatDate(requestObj.created_at)}
+            </span>
           </p>
         </div>
       </div>
