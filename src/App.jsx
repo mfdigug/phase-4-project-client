@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import BookList from "./BookList";
 import UserProfile from "./UserComponents/UserProfile";
+import { requestBook } from "./BookRequestFunctions/requestBook";
+import { deleteRequest } from "./BookRequestFunctions/deleteRequest";
 
 export const UserContext = createContext();
 
@@ -44,60 +46,18 @@ function App() {
     return () => clearTimeout(timer);
   }, [showRequestDeletedToast]);
 
-  const handleRequest = async (bookId) => {
-    if (!currentUser?.id) return;
-
-    try {
-      const response = await fetch("/api/book_requests", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          book_copy_id: bookId,
-          requester_id: currentUser.id,
-        }),
-      });
-
-      if (!response.ok) {
-        // if backend returns error status, update this to capture it.
-        throw new Error("Error creating request");
-      }
-      const newRequest = await response.json();
-      // update UI
-      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
-      setCurrentUser((prevUser) => ({
-        ...prevUser,
-        book_requests: [...(prevUser.book_requests || []), newRequest],
-      }));
-
-      setShowRequestToast(true);
-    } catch (err) {
-      console.error("Failed to create request:", err);
-    }
+  const handleRequest = (bookId) => {
+    requestBook(
+      bookId,
+      currentUser,
+      setBooks,
+      setCurrentUser,
+      setShowRequestToast,
+    );
   };
 
-  const handleDeleteRequest = async (requestId) => {
-    try {
-      const response = await fetch(`/api/book_requests/${requestId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error("Error deleting request");
-      }
-      //Update UI
-      setCurrentUser((prevUser) => ({
-        ...prevUser,
-        book_requests: prevUser.book_requests.filter(
-          (request) => request.id !== requestId,
-        ),
-      }));
-
-      setShowRequestDeletedToast(true);
-    } catch (err) {
-      console.error("Failed to delete request:", err);
-    }
+  const handleDeleteRequest = (requestId) => {
+    deleteRequest(requestId, setCurrentUser, setShowRequestDeletedToast);
   };
 
   return (
