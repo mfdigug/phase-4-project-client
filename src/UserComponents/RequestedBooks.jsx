@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { UserContext } from "../App";
 import BookCard from "../BookCard";
 
-const RequestedBooks = ({ onDeleteRequest, showRequestDeletedToast }) => {
+const RequestedBooks = ({ showRequestDeletedToast }) => {
   const currentUser = useContext(UserContext);
 
   return (
@@ -26,7 +26,6 @@ const RequestedBooks = ({ onDeleteRequest, showRequestDeletedToast }) => {
               book={request.book_copy}
               status={request.status}
               showDeleteRequest={true}
-              onDeleteRequest={onDeleteRequest}
             />
           ))
         ) : (

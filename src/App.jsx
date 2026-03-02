@@ -8,6 +8,7 @@ import { deleteRequest } from "./BookRequestFunctions/deleteRequest";
 import { useBooks } from "./hooks/useBooks";
 import { useCurrentUser } from "./hooks/useCurrentUser";
 import { useToast } from "./hooks/useToast";
+import { ActionsContextProvider } from "./ActionsContext";
 
 export const UserContext = createContext();
 
@@ -41,27 +42,30 @@ function App() {
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
       <NavBar />
       <UserContext.Provider value={currentUser}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <BookList
-                books={books}
-                handleRequest={handleRequest}
-                showRequestToast={showRequestToast}
-              />
-            }
-          />
-          <Route
-            path="/userprofile/*"
-            element={
-              <UserProfile
-                onDeleteRequest={handleDeleteRequest}
-                showRequestDeletedToast={showRequestDeletedToast}
-              />
-            }
-          />
-        </Routes>
+        <ActionsContextProvider
+          currentUser={currentUser}
+          setBooks={setBooks}
+          setCurrentUser={setCurrentUser}
+          setShowRequestToast={setShowRequestToast}
+          setShowRequestDeletedToast={setShowRequestDeletedToast}
+        >
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <BookList books={books} showRequestToast={showRequestToast} />
+              }
+            />
+            <Route
+              path="/userprofile/*"
+              element={
+                <UserProfile
+                  showRequestDeletedToast={showRequestDeletedToast}
+                />
+              }
+            />
+          </Routes>
+        </ActionsContextProvider>
       </UserContext.Provider>
     </div>
   );

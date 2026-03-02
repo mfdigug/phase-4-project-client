@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { UserContext } from "./App";
+
 import BookCard from "./BookCard";
 
-const BookList = ({ books, handleRequest, showRequestToast }) => {
+const BookList = ({ books, showRequestToast }) => {
   const currentUser = useContext(UserContext);
 
   const requestedBookIds = currentUser.book_requests
@@ -39,7 +40,7 @@ const BookList = ({ books, handleRequest, showRequestToast }) => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {availableBooks.map((book) => (
-            <BookCard key={book.id} book={book} onRequest={handleRequest} />
+            <BookCard key={book.id} book={book} />
           ))}
         </div>
       </div>

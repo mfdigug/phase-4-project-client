@@ -5,7 +5,7 @@ import MyBooks from "./MyBooks";
 import RequestedBooks from "./RequestedBooks";
 import PendingRequests from "./PendingRequests";
 
-const UserProfile = ({ onDeleteRequest, showRequestDeletedToast }) => {
+const UserProfile = ({ showRequestDeletedToast }) => {
   const currentUser = useContext(UserContext);
 
   return (
@@ -41,7 +41,6 @@ const UserProfile = ({ onDeleteRequest, showRequestDeletedToast }) => {
             path="requestedbooks"
             element={
               <RequestedBooks
-                onDeleteRequest={onDeleteRequest}
                 showRequestDeletedToast={showRequestDeletedToast}
               />
             }

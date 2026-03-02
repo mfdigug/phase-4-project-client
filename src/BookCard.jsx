@@ -1,6 +1,7 @@
 import RequestExchangeButton from "./BookCardButtons/RequestExchangeButton";
 import DeleteRequestButton from "./BookCardButtons/DeleteRequestButton";
 import DeleteBookButton from "./BookCardButtons/DeleteBookButton";
+import { useActionsContext } from "./ActionsContext";
 
 const BookCard = ({
   book,
@@ -8,10 +9,10 @@ const BookCard = ({
   request,
   showDeleteRequest,
   showDeleteTitle,
-  onRequest,
-  onDeleteRequest,
   onDeleteBook,
 }) => {
+  const { handleRequest, handleDeleteRequest } = useActionsContext();
+
   //styling
   const conditionColors = {
     New: "bg-green-100 text-green-800",
@@ -70,7 +71,9 @@ const BookCard = ({
         {/* buttons logic & components */}
 
         {showDeleteRequest && (
-          <DeleteRequestButton onClick={() => onDeleteRequest(request.id)} />
+          <DeleteRequestButton
+            onClick={() => handleDeleteRequest(request.id)}
+          />
         )}
 
         {showDeleteTitle && (
@@ -78,7 +81,7 @@ const BookCard = ({
         )}
 
         {!showDeleteRequest && !showDeleteTitle && (
-          <RequestExchangeButton onClick={() => onRequest(book.id)} />
+          <RequestExchangeButton onClick={() => handleRequest(book.id)} />
         )}
       </div>
     </div>
