@@ -1,11 +1,7 @@
 import AcceptRequestButton from "../RequestCardButtons/AcceptRequestButton";
 import RejectRequestButton from "../RequestCardButtons/RejectRequestButton";
 
-import { useActionsContext } from "../ActionsContext";
-
-const RequestCard = ({ requestObj }) => {
-  const { handleAcceptRequest, handleRejectRequest } = useActionsContext();
-
+const RequestCard = ({ requestObj, onAccept, onReject }) => {
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-AU", {
       day: "numeric",
@@ -50,19 +46,17 @@ const RequestCard = ({ requestObj }) => {
         </div>
       </div>
 
-      {/* {requestObj.status === "approved" && (
+      {requestObj.status === "approved" ? (
         <p>
           Approved. Contact requester: {requestObj.requester.username} at{" "}
           {requestObj.requester.email} to arrange a swap
         </p>
-      )} */}
-
-      {/* {requestObj.status === "pending" && ( */}
-      <div className="flex gap-2">
-        <AcceptRequestButton onClick={() => handleAcceptRequest(requestObj)} />
-        <RejectRequestButton onClick={() => handleRejectRequest(requestObj)} />
-      </div>
-      {/* )} */}
+      ) : (
+        <div className="flex gap-2">
+          <AcceptRequestButton onClick={() => onAccept(requestObj)} />
+          <RejectRequestButton onClick={() => onReject(requestObj)} />
+        </div>
+      )}
     </div>
   );
 };

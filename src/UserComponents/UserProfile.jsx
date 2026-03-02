@@ -5,7 +5,11 @@ import MyBooks from "./MyBooks";
 import RequestedBooks from "./RequestedBooks";
 import PendingRequests from "./PendingRequests";
 
-const UserProfile = ({ showRequestDeletedToast }) => {
+const UserProfile = ({
+  showRequestDeletedToast,
+  setShowRequestRejectedToast,
+  showRequestRejectedToast,
+}) => {
   const currentUser = useContext(UserContext);
 
   return (
@@ -45,7 +49,15 @@ const UserProfile = ({ showRequestDeletedToast }) => {
               />
             }
           />
-          <Route path="pendingrequests" element={<PendingRequests />} />
+          <Route
+            path="pendingrequests"
+            element={
+              <PendingRequests
+                setShowRequestRejectedToast={setShowRequestRejectedToast}
+                showRequestRejectedToast={showRequestRejectedToast}
+              />
+            }
+          />
         </Routes>
       </div>
     </div>

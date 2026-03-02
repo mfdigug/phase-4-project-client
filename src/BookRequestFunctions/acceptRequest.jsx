@@ -1,4 +1,8 @@
-export const acceptRequest = async (requestObj) => {
+export const acceptRequest = async (
+  requestObj,
+  setPendingRequests,
+  setApprovedRequests,
+) => {
   try {
     const response = await fetch(`/api/book_requests/${requestObj.id}`, {
       method: "PATCH",
@@ -12,16 +16,14 @@ export const acceptRequest = async (requestObj) => {
       // if backend returns error status, update this to capture it.
       throw new Error("Error approving request");
     }
-    const acceptedResponse = await response.json();
-    console.log("accepted request:", acceptedResponse);
-    // update UI
-    // setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
-    // setCurrentUser((prevUser) => ({
-    //   ...prevUser,
-    //   book_requests: [...(prevUser.book_requests || []), newRequest],
-    // }));
 
-    // setShowRequestToast(true);
+    const acceptedObject = await response.json();
+    // update UI
+    setPendingRequests((prev) =>
+      prev.filter((approved) => approved.id !== requestObj.id),
+    );
+
+    setApprovedRequests((prev) => [...prev, acceptedObject]);
   } catch (err) {
     console.error("Failed to accept request:", err);
   }

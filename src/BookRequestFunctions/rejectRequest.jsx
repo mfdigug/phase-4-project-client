@@ -1,4 +1,8 @@
-export const rejectRequest = async (requestObj) => {
+export const rejectRequest = async (
+  requestObj,
+  setPendingRequests,
+  setShowRequestRejectedToast,
+) => {
   try {
     const response = await fetch(`/api/book_requests/${requestObj.id}`, {
       method: "PATCH",
@@ -8,21 +12,16 @@ export const rejectRequest = async (requestObj) => {
       body: JSON.stringify({ status: "rejected" }),
     });
 
-    const rejectedRequest = await response.json();
-    console.log("rejected request:", rejectedRequest);
-
     if (!response.ok) {
       throw new Error("Error rejecting request");
     }
-    //Update UI
-    // setCurrentUser((prevUser) => ({
-    //   ...prevUser,
-    //   book_requests: prevUser.book_requests.filter(
-    //     (request) => request.id !== requestObj.id,
-    //   ),
-    // }));
 
-    // setShowRequestDeletedToast(true);
+    //Update UI
+    setPendingRequests((prev) =>
+      prev.filter((rejected) => rejected.id !== requestObj.id),
+    );
+
+    setShowRequestRejectedToast(true);
   } catch (err) {
     console.error("Failed to reject request:", err);
   }

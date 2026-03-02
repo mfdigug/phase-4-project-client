@@ -1,17 +1,39 @@
 import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../App";
+import { acceptRequest } from "../BookRequestFunctions/acceptRequest";
+import { rejectRequest } from "../BookRequestFunctions/rejectRequest";
+
 import RequestCard from "./RequestCard";
 
-const PendingRequests = () => {
+const PendingRequests = ({
+  setShowRequestRejectedToast,
+  showRequestRejectedToast,
+}) => {
   const currentUser = useContext(UserContext);
   const [pendingRequests, setPendingRequests] = useState([]);
-  // const [approvedRequests, setApprovedRequests] = useState([]);
+  const [approvedRequests, setApprovedRequests] = useState([]);
+
+  const handleAccept = (requestObj) => {
+    acceptRequest(requestObj, setPendingRequests, setApprovedRequests);
+  };
+
+  const handleReject = (requestObj) => {
+    rejectRequest(requestObj, setPendingRequests, setShowRequestRejectedToast);
+  };
 
   useEffect(() => {
     if (!currentUser?.id) return;
-    fetch(`/api/users/${currentUser.id}/pending_requests`)
+
+    fetch(`/api/users/book_requests?owner_id=${currentUser.id}&status=pending`)
       .then((r) => r.json())
-      .then((data) => setPendingRequests(data));
+      .then((data) => {
+        setPendingRequests(
+          data.filter((request) => request.status === "pending"),
+        );
+        setApprovedRequests(
+          data.filter((request) => request.status === "approved"),
+        );
+      });
   }, [currentUser]);
 
   return (
@@ -19,10 +41,20 @@ const PendingRequests = () => {
       <h2 className="text-3xl font-semibold text-slate-500 mb-6">
         Pending Requests
       </h2>
+      {showRequestRejectedToast && (
+        <div className="mb-4 left-6 z-50 bg-red-600 text-white text-xl px-6 py-3 rounded-lg shadow-lg">
+          Request rejected
+        </div>
+      )}
       <ul>
         {pendingRequests?.length > 0 ? (
           pendingRequests?.map((pending) => (
-            <RequestCard key={pending.id} requestObj={pending} />
+            <RequestCard
+              key={pending.id}
+              requestObj={pending}
+              onAccept={handleAccept}
+              onReject={handleReject}
+            />
           ))
         ) : (
           <p> No requests for approval</p>
@@ -34,16 +66,13 @@ const PendingRequests = () => {
       </h2>
 
       <ul>
-        <li>Some books will be listed here</li>
-        {/* {approvedRequests?.length > 0 ? (
-          approvedRequests?.map((pending) => (
-            <RequestCard key={pending.id} requestObj={pending} />
+        {approvedRequests?.length > 0 ? (
+          approvedRequests?.map((approved) => (
+            <RequestCard key={approved.id} requestObj={approved} />
           ))
-
-          requestObj.requester.username
         ) : (
           <p> No requests approved</p>
-        )} */}
+        )}
       </ul>
     </div>
   );
