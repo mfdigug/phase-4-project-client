@@ -5,6 +5,7 @@ import RequestCard from "./RequestCard";
 const PendingRequests = () => {
   const currentUser = useContext(UserContext);
   const [pendingRequests, setPendingRequests] = useState([]);
+  // const [approvedRequests, setApprovedRequests] = useState([]);
 
   useEffect(() => {
     if (!currentUser?.id) return;
@@ -26,6 +27,23 @@ const PendingRequests = () => {
         ) : (
           <p> No requests for approval</p>
         )}
+      </ul>
+
+      <h2 className="text-3xl font-semibold text-slate-500 mt-8 mb-6">
+        Approved Requests
+      </h2>
+
+      <ul>
+        <li>Some books will be listed here</li>
+        {/* {approvedRequests?.length > 0 ? (
+          approvedRequests?.map((pending) => (
+            <RequestCard key={pending.id} requestObj={pending} />
+          ))
+
+          requestObj.requester.username
+        ) : (
+          <p> No requests approved</p>
+        )} */}
       </ul>
     </div>
   );

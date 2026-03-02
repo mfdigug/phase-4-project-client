@@ -7,6 +7,8 @@ import { requestBook } from "./BookRequestFunctions/requestBook";
 import { deleteRequest } from "./BookRequestFunctions/deleteRequest";
 import { useBooks } from "./hooks/useBooks";
 import { useCurrentUser } from "./hooks/useCurrentUser";
+import { acceptRequest } from "./BookRequestFunctions/acceptRequest";
+import { rejectRequest } from "./BookRequestFunctions/rejectRequest";
 import { useToast } from "./hooks/useToast";
 import { ActionsContextProvider } from "./ActionsContext";
 
@@ -14,7 +16,7 @@ export const UserContext = createContext();
 
 function App() {
   const { books, setBooks } = useBooks();
-  const { currentUser, setCurrentUser } = useCurrentUser(8);
+  const { currentUser, setCurrentUser } = useCurrentUser(4);
 
   const { showToast: showRequestToast, setShowToast: setShowRequestToast } =
     useToast();
@@ -36,6 +38,14 @@ function App() {
 
   const handleDeleteRequest = (requestId) => {
     deleteRequest(requestId, setCurrentUser, setShowRequestDeletedToast);
+  };
+
+  const handleAcceptRequest = (requestObj) => {
+    acceptRequest(requestObj);
+  };
+
+  const handleRejectRequest = (requestObj) => {
+    rejectRequest(requestObj);
   };
 
   return (
