@@ -24,7 +24,7 @@ const PendingRequests = ({
   useEffect(() => {
     if (!currentUser?.id) return;
 
-    fetch(`/api/users/book_requests?owner_id=${currentUser.id}&status=pending`)
+    fetch(`/api/users/${currentUser.id}/pending_requests`)
       .then((r) => r.json())
       .then((data) => {
         setPendingRequests(
