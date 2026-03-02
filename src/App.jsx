@@ -5,46 +5,23 @@ import BookList from "./BookList";
 import UserProfile from "./UserComponents/UserProfile";
 import { requestBook } from "./BookRequestFunctions/requestBook";
 import { deleteRequest } from "./BookRequestFunctions/deleteRequest";
+import { useBooks } from "./hooks/useBooks";
+import { useCurrentUser } from "./hooks/useCurrentUser";
+import { useToast } from "./hooks/useToast";
 
 export const UserContext = createContext();
 
 function App() {
-  const [books, setBooks] = useState([]);
-  const [currentUser, setCurrentUser] = useState({});
-  const [showRequestToast, setShowRequestToast] = useState(false);
-  const [showRequestDeletedToast, setShowRequestDeletedToast] = useState(false);
+  const { books, setBooks } = useBooks();
+  const { currentUser, setCurrentUser } = useCurrentUser(8);
 
-  useEffect(() => {
-    fetch("/api/books")
-      .then((r) => r.json())
-      .then((data) => setBooks(data));
-  }, []);
+  const { showToast: showRequestToast, setShowToast: setShowRequestToast } =
+    useToast();
 
-  useEffect(() => {
-    fetch("/api/users/8")
-      .then((r) => r.json())
-      .then((data) => setCurrentUser(data));
-  }, []);
-
-  useEffect(() => {
-    if (!showRequestToast) return;
-
-    const timer = setTimeout(() => {
-      setShowRequestToast(false);
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, [showRequestToast]);
-
-  useEffect(() => {
-    if (!showRequestDeletedToast) return;
-
-    const timer = setTimeout(() => {
-      setShowRequestDeletedToast(false);
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, [showRequestDeletedToast]);
+  const {
+    showToast: showRequestDeletedToast,
+    setShowToast: setShowRequestDeletedToast,
+  } = useToast();
 
   const handleRequest = (bookId) => {
     requestBook(
