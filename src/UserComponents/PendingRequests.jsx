@@ -1,5 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../App";
+import { useRequests } from "../hooks/useRequests";
 import { acceptRequest } from "../BookRequestFunctions/acceptRequest";
 import { rejectRequest } from "../BookRequestFunctions/rejectRequest";
 
@@ -10,8 +11,12 @@ const PendingRequests = ({
   showRequestRejectedToast,
 }) => {
   const currentUser = useContext(UserContext);
-  const [pendingRequests, setPendingRequests] = useState([]);
-  const [approvedRequests, setApprovedRequests] = useState([]);
+  const {
+    pendingRequests,
+    setPendingRequests,
+    approvedRequests,
+    setApprovedRequests,
+  } = useRequests(currentUser);
 
   const handleAccept = (requestObj) => {
     acceptRequest(requestObj, setPendingRequests, setApprovedRequests);
@@ -20,21 +25,6 @@ const PendingRequests = ({
   const handleReject = (requestObj) => {
     rejectRequest(requestObj, setPendingRequests, setShowRequestRejectedToast);
   };
-
-  useEffect(() => {
-    if (!currentUser?.id) return;
-
-    fetch(`/api/users/${currentUser.id}/pending_requests`)
-      .then((r) => r.json())
-      .then((data) => {
-        setPendingRequests(
-          data.filter((request) => request.status === "pending"),
-        );
-        setApprovedRequests(
-          data.filter((request) => request.status === "approved"),
-        );
-      });
-  }, [currentUser]);
 
   return (
     <div>
