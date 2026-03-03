@@ -6,21 +6,25 @@ import { useBooks } from "../hooks/useBooks";
 
 const AddBook = () => {
   const currentUser = useContext(UserContext);
+  const [refreshPage, setRefreshPage] = useState(false);
   const { addBook } = useBooks();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const newBook = {
-      title: formData.get("title"),
-      author: formData.get("author"),
-      genre: formData.get("genre"),
-      condition: formData.get("condition"),
-      image_url: formData.get("image_url"),
-      owner_id: currentUser.id,
-    };
-    addBook(newBook);
-  }
+  const formSchema = yup.object().shape({
+    title: yup.string().required("Title is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      author: "",
+      image: "",
+    },
+    validationSchema: formSchema,
+    onSubmit: (values) => {
+      //   addBook(newBook);
+      console.log(values);
+    },
+  });
 
   return (
     <div>
@@ -28,12 +32,39 @@ const AddBook = () => {
         Add a New Book
       </h1>
       {/* required fields: title, author, genre, condition, image_url, pass owner_id? */}
-      <div onSubmit={handleSubmit}>
-        <form>
-          <input type="text" />
-          <label>Title</label>
+      <div className="max-w-md">
+        <form onSubmit={formik.handleSubmit}>
+          <label htmlFor="title">Title</label>
+          <br />
+          <input
+            id="title"
+            name="title"
+            onChange={formik.handleChange}
+            value={formik.values.title}
+          />
+          <p style={{ color: "red" }}> {formik.errors.title}</p>
 
-          <button type="submit">Add Book</button>
+          <label htmlFor="author">author</label>
+          <br />
+          <input
+            id="author"
+            name="author"
+            onChange={formik.handleChange}
+            value={formik.values.author}
+          />
+          <p style={{ color: "red" }}> {formik.errors.author}</p>
+
+          <label htmlFor="title">image</label>
+          <br />
+          <input
+            id="image"
+            name="image"
+            onChange={formik.handleChange}
+            value={formik.values.image}
+          />
+          <p style={{ color: "red" }}> {formik.errors.image}</p>
+
+          <button type="submit">Submit</button>
         </form>
       </div>
     </div>
