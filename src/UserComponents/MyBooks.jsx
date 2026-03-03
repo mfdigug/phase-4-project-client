@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { UserContext } from "../App";
 import BookCard from "../BookCard";
-import AddBookButton from "./AddBookButton";
+import { NavLink } from "react-router-dom";
 
 const MyBooks = () => {
   const currentUser = useContext(UserContext);
@@ -16,7 +16,12 @@ const MyBooks = () => {
         </div>
 
         <div className="text-right">
-          <AddBookButton onClick={() => handleAddBook()} />
+          <NavLink
+            to="/userprofile/addbook"
+            className="flex items-center gap-2 px-4 py-3 bg-slate-600 transition-colors  text-white hover:bg-slate-700"
+          >
+            Add New Book
+          </NavLink>
         </div>
       </div>
 

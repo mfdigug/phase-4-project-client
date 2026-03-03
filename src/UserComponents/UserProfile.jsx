@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import MyBooks from "./MyBooks";
 import RequestedBooks from "./RequestedBooks";
 import PendingRequests from "./PendingRequests";
+import AddBook from "./AddBook";
 
 const UserProfile = ({
   showRequestDeletedToast,
@@ -41,6 +42,7 @@ const UserProfile = ({
 
         <Routes>
           <Route path="mybooks" element={<MyBooks />} />
+          <Route path="addbook" element={<AddBook />} />
           <Route
             path="requestedbooks"
             element={

@@ -1,6 +1,6 @@
 import RequestExchangeButton from "./BookCardButtons/RequestExchangeButton";
 import DeleteRequestButton from "./BookCardButtons/DeleteRequestButton";
-import DeleteBookButton from "./BookCardButtons/DeleteBookButton";
+import DeleteBookButton from "./MyBookFunctions/DeleteBookButton";
 import { useActionsContext } from "./ActionsContext";
 
 const BookCard = ({
