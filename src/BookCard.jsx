@@ -77,7 +77,7 @@ const BookCard = ({
         )}
 
         {showDeleteTitle && (
-          <DeleteBookButton onClick={() => handleDelete(book.id)} />
+          <DeleteBookButton onClick={() => onDeleteBook(book.id)} />
         )}
 
         {!showDeleteRequest && !showDeleteTitle && (

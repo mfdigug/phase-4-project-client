@@ -26,9 +26,14 @@ export const useBooks = () => {
   function deleteBook(bookId) {
     fetch(`/api/books/${bookId}`, {
       method: "DELETE",
-    }).then(() => {
-      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
-    });
+    })
+      .then((r) => {
+        console.log("response status:", r.status);
+        return r.json;
+      })
+      .then((data) => {
+        console.log("Deleted book response", data);
+      });
   }
 
   return { books, addBook, deleteBook, setBooks };
