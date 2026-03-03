@@ -14,7 +14,7 @@ export const UserContext = createContext();
 
 function App() {
   const { books, setBooks } = useBooks();
-  const { currentUser, setCurrentUser } = useCurrentUser(3);
+  const { currentUser, setCurrentUser } = useCurrentUser(5);
 
   const { showToast: showRequestToast, setShowToast: setShowRequestToast } =
     useToast();
@@ -28,20 +28,6 @@ function App() {
     showToast: showRequestRejectedToast,
     setShowToast: setShowRequestRejectedToast,
   } = useToast();
-
-  const handleRequest = (bookId) => {
-    requestBook(
-      bookId,
-      currentUser,
-      setBooks,
-      setCurrentUser,
-      setShowRequestToast,
-    );
-  };
-
-  const handleDeleteRequest = (requestId) => {
-    deleteRequest(requestId, setCurrentUser, setShowRequestDeletedToast);
-  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
