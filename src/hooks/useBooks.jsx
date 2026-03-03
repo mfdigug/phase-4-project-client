@@ -17,7 +17,10 @@ export const useBooks = () => {
       body: JSON.stringify(newBook),
     })
       .then((r) => r.json())
-      .then((data) => setBooks((prevBooks) => [...prevBooks, data]));
+      .then((data) => {
+        console.log(data);
+        setBooks((prevBooks) => [...prevBooks, data]);
+      });
   }
 
   function deleteBook(bookId) {

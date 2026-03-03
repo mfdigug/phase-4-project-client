@@ -14,7 +14,7 @@ export const UserContext = createContext();
 
 function App() {
   const { books, setBooks } = useBooks();
-  const { currentUser, setCurrentUser } = useCurrentUser(4);
+  const { currentUser, setCurrentUser } = useCurrentUser(3);
 
   const { showToast: showRequestToast, setShowToast: setShowRequestToast } =
     useToast();
