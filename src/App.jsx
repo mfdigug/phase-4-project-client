@@ -29,6 +29,11 @@ function App() {
     setShowToast: setShowRequestRejectedToast,
   } = useToast();
 
+  const {
+    showToast: showBookDeletedToast,
+    setShowToast: setShowBookDeletedToast,
+  } = useToast();
+
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
       <NavBar />
@@ -39,6 +44,7 @@ function App() {
           setCurrentUser={setCurrentUser}
           setShowRequestToast={setShowRequestToast}
           setShowRequestDeletedToast={setShowRequestDeletedToast}
+          setShowBookDeletedToast={setShowBookDeletedToast}
         >
           <Routes>
             <Route
@@ -54,6 +60,7 @@ function App() {
                   showRequestDeletedToast={showRequestDeletedToast}
                   setShowRequestRejectedToast={setShowRequestRejectedToast}
                   showRequestRejectedToast={showRequestRejectedToast}
+                  showBookDeletedToast={showBookDeletedToast}
                 />
               }
             />

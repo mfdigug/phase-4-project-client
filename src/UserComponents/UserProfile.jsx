@@ -10,6 +10,7 @@ const UserProfile = ({
   showRequestDeletedToast,
   setShowRequestRejectedToast,
   showRequestRejectedToast,
+  showBookDeletedToast,
 }) => {
   const currentUser = useContext(UserContext);
 
@@ -41,7 +42,10 @@ const UserProfile = ({
         </div>
 
         <Routes>
-          <Route path="mybooks" element={<MyBooks />} />
+          <Route
+            path="mybooks"
+            element={<MyBooks showBookDeletedToast={showBookDeletedToast} />}
+          />
           <Route path="addbook" element={<AddBook />} />
           <Route
             path="requestedbooks"

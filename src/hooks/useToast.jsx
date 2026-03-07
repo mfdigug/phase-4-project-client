@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const useToast = (duration = 2500) => {
+export const useToast = (duration = 1500) => {
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {

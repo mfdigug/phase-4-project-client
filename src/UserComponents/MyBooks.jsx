@@ -3,10 +3,11 @@ import { UserContext } from "../App";
 import BookCard from "../BookCard";
 import { NavLink } from "react-router-dom";
 import { useBooks } from "../hooks/useBooks";
+import { useActionsContext } from "../ActionsContext";
 
-const MyBooks = () => {
+const MyBooks = ({ showBookDeletedToast }) => {
   const currentUser = useContext(UserContext);
-  const { deleteBook } = useBooks();
+  const { handleDeleteBook } = useActionsContext();
 
   return (
     <div>
@@ -27,13 +28,19 @@ const MyBooks = () => {
         </div>
       </div>
 
+      {showBookDeletedToast && (
+        <div className="mb-4 left-6 z-50 bg-red-600 text-white text-xl px-6 py-3 rounded-lg shadow-lg">
+          Book Deleted
+        </div>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {currentUser?.book_copies?.map((book) => (
           <BookCard
             key={book.id}
             book={book}
             showDeleteTitle={true}
-            onDeleteBook={deleteBook}
+            onDeleteBook={handleDeleteBook}
           />
         )) || <p> No books available</p>}
       </div>
