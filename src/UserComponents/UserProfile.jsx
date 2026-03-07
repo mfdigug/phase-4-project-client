@@ -43,6 +43,11 @@ const UserProfile = ({
 
         <Routes>
           <Route
+            index
+            element={<MyBooks showBookDeletedToast={showBookDeletedToast} />}
+          />
+
+          <Route
             path="mybooks"
             element={<MyBooks showBookDeletedToast={showBookDeletedToast} />}
           />
