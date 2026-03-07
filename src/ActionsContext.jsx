@@ -33,8 +33,8 @@ export function ActionsContextProvider({
     deleteBook(bookId, setCurrentUser, setShowBookDeletedToast);
   };
 
-  const handleAddBook = (newBook) => {
-    addBook(newBook, setCurrentUser);
+  const handleAddBook = async (newBook) => {
+    return await addBook(newBook, setBooks, setCurrentUser);
   };
 
   return (

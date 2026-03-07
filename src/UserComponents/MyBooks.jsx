@@ -34,16 +34,20 @@ const MyBooks = ({ showBookDeletedToast }) => {
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {currentUser?.book_copies?.map((book) => (
-          <BookCard
-            key={book.id}
-            book={book}
-            showDeleteTitle={true}
-            onDeleteBook={handleDeleteBook}
-          />
-        )) || <p> No books available</p>}
-      </div>
+      {currentUser?.book_copies?.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {currentUser.book_copies.map((book) => (
+            <BookCard
+              key={book.id}
+              book={book}
+              showDeleteTitle={true}
+              onDeleteBook={handleDeleteBook}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="text-slate-400 text-lg mt-4">No books available</p>
+      )}
     </div>
   );
 };

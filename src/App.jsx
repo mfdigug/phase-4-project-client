@@ -3,8 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import BookList from "./BookList";
 import UserProfile from "./UserComponents/UserProfile";
-import { requestBook } from "./BookRequestFunctions/requestBook";
-import { deleteRequest } from "./BookRequestFunctions/deleteRequest";
 import { useBooks } from "./hooks/useBooks";
 import { useCurrentUser } from "./hooks/useCurrentUser";
 import { useToast } from "./hooks/useToast";
@@ -14,7 +12,7 @@ export const UserContext = createContext();
 
 function App() {
   const { books, setBooks } = useBooks();
-  const { currentUser, setCurrentUser } = useCurrentUser(5);
+  const { currentUser, setCurrentUser } = useCurrentUser(3);
 
   const { showToast: showRequestToast, setShowToast: setShowRequestToast } =
     useToast();

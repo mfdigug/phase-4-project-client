@@ -13,10 +13,10 @@ export const deleteBook = async (
     .then(() => {
       setCurrentUser((prevUser) => ({
         ...prevUser,
-        book_copies: prevUser.book_copies.filter((book) => book.id !== bookId),
+        book_copies: (prevUser.book_copies || []).filter(
+          (book) => book.id !== bookId,
+        ),
       }));
       setShowBookDeletedToast(true);
     });
-
-  return { deleteBook };
 };

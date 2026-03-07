@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { UserContext } from "../App";
-import { useBooks } from "../hooks/useBooks";
 import { useActionsContext } from "../ActionsContext";
 import { useNavigate } from "react-router-dom";
 
@@ -38,13 +37,14 @@ const AddBook = () => {
       image: "",
     },
     validationSchema: formSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
       const newBook = {
         ...values,
         owner_id: currentUser.id,
         is_available: true,
       };
-      handleAddBook(newBook);
+      await handleAddBook(newBook);
+
       resetForm();
       navigate("/userprofile/mybooks");
     },
