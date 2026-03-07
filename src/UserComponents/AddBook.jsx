@@ -3,10 +3,13 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { UserContext } from "../App";
 import { useBooks } from "../hooks/useBooks";
+import { useActionsContext } from "../ActionsContext";
+import { useNavigate } from "react-router-dom";
 
 const AddBook = () => {
   const currentUser = useContext(UserContext);
-  const { addBook } = useBooks();
+  const { handleAddBook } = useActionsContext();
+  const navigate = useNavigate();
 
   // options
   const genreOptions = [
@@ -41,8 +44,9 @@ const AddBook = () => {
         owner_id: currentUser.id,
         is_available: true,
       };
-      addBook(newBook);
+      handleAddBook(newBook);
       resetForm();
+      navigate("/userprofile/mybooks");
     },
   });
 
